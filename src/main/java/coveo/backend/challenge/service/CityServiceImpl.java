@@ -5,10 +5,11 @@ import coveo.backend.challenge.model.CityInfo;
 import coveo.backend.challenge.model.CoveoRESTException;
 import coveo.backend.challenge.util.CityInfoBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Cacheable(value="allCitiesCache")
     public Map<Long, CityInfo> getAllCities() {
         Map<Long, CityInfo> allCitiesMap = new HashMap<Long, CityInfo>();
         URL citiesDataURL;
@@ -80,4 +82,10 @@ public class CityServiceImpl implements CityService {
         }
         return cityInfo;
     }
+
+    @Override
+    @CacheEvict(value = "allCitiesCache", allEntries=true)
+    public void clearCache(){
+    }
+
 }

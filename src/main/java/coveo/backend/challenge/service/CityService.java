@@ -6,4 +6,5 @@ import java.util.Map;
 
 public interface CityService {
     public Map<Long, CityInfo> getAllCities();
+    public void clearCache();
 }

@@ -39,4 +39,9 @@ public class MediatorImpl implements Mediator {
         suggestionResponse.addSuggestionsItem(montrealSuggestion);
         return suggestionResponse;
     }
+
+    @Override
+    public void clearCache() {
+        cityService.clearCache();
+    }
 }

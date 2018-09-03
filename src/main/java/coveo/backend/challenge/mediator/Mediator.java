@@ -13,4 +13,5 @@ import coveo.backend.challenge.model.SuggestionResponse;
 
 public interface Mediator {
     public SuggestionResponse getSuggestions(String query);
+    public void clearCache();
 }
