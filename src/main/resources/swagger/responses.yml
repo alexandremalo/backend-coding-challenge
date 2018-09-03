@@ -1,0 +1,44 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: '2.0'
+  title: 'North America Large Cities'
+
+paths: {}
+
+definitions:
+  SuggestionResponse:
+    type: object
+    properties:
+      suggestions:
+        type: array
+        items:
+          $ref: '#/definitions/Suggestion'
+  Suggestion:
+    type: object
+    properties:
+      name:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      score:
+        type: number
+        minimum: 0
+        maximum: 1
+        exclusiveMinimum: false
+        exclusiveMaximum: false
+  ErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+      type:
+        type: string
+      code:
+        type: string
+      message:
+        type: string
+      devMessage:
+        type: string
