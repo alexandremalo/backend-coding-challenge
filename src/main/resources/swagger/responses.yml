@@ -37,7 +37,7 @@ definitions:
       type:
         type: string
       code:
-        type: string
+        type: integer
       message:
         type: string
       devMessage:
