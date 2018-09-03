@@ -10,6 +10,7 @@ public class CityInfo {
     private double longitude;
     private double latitude;
     private long population;
+    private double score;
 
     public CityInfo(long id, String name, String country, String stateOrProvince, double longitude, double latitude, long population) {
         this.id = id;
@@ -20,6 +21,7 @@ public class CityInfo {
         this.latitude = latitude;
         this.population = population;
     }
+
 
     public long getId() {
         return id;
@@ -75,5 +77,13 @@ public class CityInfo {
 
     public void setPopulation(long population) {
         this.population = population;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 }
