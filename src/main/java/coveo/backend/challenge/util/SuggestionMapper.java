@@ -19,7 +19,7 @@ public class SuggestionMapper {
                 .append(getMappedCountry(cityInfo.getCountry()))
                 .toString();
         suggestion.setName(fullCityName);
-        suggestion.setScore(BigDecimal.valueOf(0.5d));
+        suggestion.setScore(BigDecimal.valueOf(cityInfo.getScore()));
         suggestion.setLongitude(String.valueOf(cityInfo.getLongitude()));
         suggestion.setLatitude(String.valueOf(cityInfo.getLatitude()));
         return suggestion;

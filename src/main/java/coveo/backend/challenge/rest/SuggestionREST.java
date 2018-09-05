@@ -32,7 +32,7 @@ public class SuggestionREST {
     public ResponseEntity getSuggestions(@RequestParam(value = "q", required = false, defaultValue = "") String query,
                                          @RequestParam(value = "longitude", required = false, defaultValue = "") String longitude,
                                          @RequestParam(value = "latitude", required = false, defaultValue = "") String latitude){
-        return ResponseEntity.ok(mediator.getSuggestions(query));
+        return ResponseEntity.ok(mediator.getSuggestions(query, longitude, latitude));
     }
 
     //Clearing cache every 24 hours
