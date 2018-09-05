@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class CityInfo {
     private long id;
     private String name;
+    private String altName;
     private String country;
     private String stateOrProvince;
     private double longitude;
@@ -12,9 +13,10 @@ public class CityInfo {
     private long population;
     private double score;
 
-    public CityInfo(long id, String name, String country, String stateOrProvince, double longitude, double latitude, long population) {
+    public CityInfo(long id, String name , String altName, String country, String stateOrProvince, double longitude, double latitude, long population) {
         this.id = id;
         this.name = name;
+        this.altName = altName;
         this.country = country;
         this.stateOrProvince = stateOrProvince;
         this.longitude = longitude;
@@ -37,6 +39,14 @@ public class CityInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAltName() {
+        return altName;
+    }
+
+    public void setAltName(String altName) {
+        this.altName = altName;
     }
 
     public String getCountry() {

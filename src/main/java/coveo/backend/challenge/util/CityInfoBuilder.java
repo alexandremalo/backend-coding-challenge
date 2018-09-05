@@ -5,6 +5,7 @@ import coveo.backend.challenge.model.CityInfo;
 public class CityInfoBuilder {
     private long id;
     private String name;
+    private String altName;
     private String stateOrProvince;
     private String country;
     private double longitude;
@@ -18,6 +19,11 @@ public class CityInfoBuilder {
 
     public CityInfoBuilder name(String name){
         this.name = name;
+        return this;
+    }
+
+    public CityInfoBuilder altName(String altName){
+        this.altName = altName;
         return this;
     }
 
@@ -47,6 +53,6 @@ public class CityInfoBuilder {
     }
 
     public CityInfo createCityInfo(){
-        return new CityInfo(id, name, country, stateOrProvince, longitude, latitude, population);
+        return new CityInfo(id, name, altName, country, stateOrProvince, longitude, latitude, population);
     }
 }

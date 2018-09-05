@@ -14,7 +14,8 @@ public class CityFinder {
         if (!StringUtils.isEmpty(query) && query.length() >= 3){
             for (Map.Entry<Long, CityInfo> entry : allCitiesMap.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getName() != null){
-                    if(entry.getValue().getName().contains(query)){
+                    if(entry.getValue().getName().toLowerCase().contains(query.toLowerCase()) ||
+                            entry.getValue().getAltName().toLowerCase().contains(query.toLowerCase())){
                         relevantCities.add(entry.getValue());
                     }
                 }

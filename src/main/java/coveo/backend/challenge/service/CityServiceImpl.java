@@ -22,6 +22,7 @@ public class CityServiceImpl implements CityService {
 
     private final int ID_COLUMN = 0;
     private final int NAME_COLUMN = 1;
+    private final int ALT_NAME_COLUMN = 3;
     private final int LATITUDE_COLUMN = 4;
     private final int LONGITUDE_COLUMN = 5;
     private final int POPULATION_COLUMN = 14;
@@ -71,6 +72,7 @@ public class CityServiceImpl implements CityService {
             cityInfo = cityInfoBuilder
                     .id(Long.valueOf(splittedCityLine[ID_COLUMN]))
                     .name(splittedCityLine[NAME_COLUMN])
+                    .altName(splittedCityLine[ALT_NAME_COLUMN])
                     .country(splittedCityLine[COUNTRY_COLUMN])
                     .stateOrProvince(splittedCityLine[PROVINCE_OR_STATE_COLUMN])
                     .longitude(Double.valueOf(splittedCityLine[LONGITUDE_COLUMN]))
