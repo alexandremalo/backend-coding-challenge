@@ -10,10 +10,10 @@ public class CityInfo {
     private String stateOrProvince;
     private double longitude;
     private double latitude;
-    private long population;
+    private int population;
     private double score;
 
-    public CityInfo(long id, String name , String altName, String country, String stateOrProvince, double longitude, double latitude, long population) {
+    public CityInfo(long id, String name, String altName, String country, String stateOrProvince, double longitude, double latitude, int population) {
         this.id = id;
         this.name = name;
         this.altName = altName;
@@ -81,11 +81,11 @@ public class CityInfo {
         this.longitude = longitude;
     }
 
-    public long getPopulation() {
+    public int getPopulation() {
         return population;
     }
 
-    public void setPopulation(long population) {
+    public void setPopulation(int population) {
         this.population = population;
     }
 
@@ -95,5 +95,10 @@ public class CityInfo {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    //Descendant order
+    public int compareTo(CityInfo cityInfo) {
+        return (this.getScore() - cityInfo.getScore() > 0) ? -1 : 1;
     }
 }

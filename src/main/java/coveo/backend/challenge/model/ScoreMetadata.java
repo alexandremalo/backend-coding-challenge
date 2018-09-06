@@ -1,31 +1,31 @@
 package coveo.backend.challenge.model;
 
 public class ScoreMetadata {
-    private long minPopulation;
-    private long maxPopulation;
+    private int minPopulation;
+    private int maxPopulation;
     private double minDistance;
     private double maxDistance;
 
-    public ScoreMetadata(long minPopulation, long maxPopulation, double minDistance, double maxDistance) {
+    public ScoreMetadata(int minPopulation, int maxPopulation, double minDistance, double maxDistance) {
         this.minPopulation = minPopulation;
         this.maxPopulation = maxPopulation;
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
     }
 
-    public long getMinPopulation() {
+    public int getMinPopulation() {
         return minPopulation;
     }
 
-    public void setMinPopulation(long minPopulation) {
+    public void setMinPopulation(int minPopulation) {
         this.minPopulation = minPopulation;
     }
 
-    public long getMaxPopulation() {
+    public int getMaxPopulation() {
         return maxPopulation;
     }
 
-    public void setMaxPopulation(long maxPopulation) {
+    public void setMaxPopulation(int maxPopulation) {
         this.maxPopulation = maxPopulation;
     }
 

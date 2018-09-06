@@ -10,7 +10,7 @@ public class CityInfoBuilder {
     private String country;
     private double longitude;
     private double latitude;
-    private long population;
+    private int population;
 
     public CityInfoBuilder id(long id){
         this.id = id;
@@ -47,7 +47,7 @@ public class CityInfoBuilder {
         return this;
     }
 
-    public CityInfoBuilder population(long population){
+    public CityInfoBuilder population(int population){
         this.population = population;
         return this;
     }

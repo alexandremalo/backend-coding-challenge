@@ -77,7 +77,7 @@ public class CityServiceImpl implements CityService {
                     .stateOrProvince(splittedCityLine[PROVINCE_OR_STATE_COLUMN])
                     .longitude(Double.valueOf(splittedCityLine[LONGITUDE_COLUMN]))
                     .latitude(Double.valueOf(splittedCityLine[LATITUDE_COLUMN]))
-                    .population(Long.valueOf(splittedCityLine[POPULATION_COLUMN]))
+                    .population(Integer.valueOf(splittedCityLine[POPULATION_COLUMN]))
                     .createCityInfo();
         } catch (Exception e){
             throw new CoveoRESTException(500, "Was not able to parse TSV line", "Bad data in TSV", e.getMessage());
