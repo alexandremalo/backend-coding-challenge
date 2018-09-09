@@ -35,9 +35,7 @@ public class SuggestionREST {
     @Scheduled(fixedDelayString = "${cities.refresh.rate}")
     @RequestMapping(value = CLEAR_CACHE_URL, method = RequestMethod.GET)
     public ResponseEntity clearCache() {
-        System.out.println("Refreshing object");
         mediator.clearCache();
-        System.out.println("Refresh done");
         return ResponseEntity.noContent().build();
     }
 
