@@ -5,7 +5,7 @@ import coveo.backend.challenge.model.SuggestionResponse;
 import coveo.backend.challenge.service.CityScoreService;
 import coveo.backend.challenge.service.CityService;
 import coveo.backend.challenge.util.CityFinder;
-import coveo.backend.challenge.util.CoveoExceptionHelper;
+import coveo.backend.challenge.exception.CoveoExceptionHelper;
 import coveo.backend.challenge.util.SuggestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

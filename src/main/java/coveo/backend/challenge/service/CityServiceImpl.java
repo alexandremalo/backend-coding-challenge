@@ -2,9 +2,9 @@ package coveo.backend.challenge.service;
 
 import coveo.backend.challenge.config.CitiesDataSource;
 import coveo.backend.challenge.model.CityInfo;
-import coveo.backend.challenge.model.CoveoException;
+import coveo.backend.challenge.exception.CoveoException;
 import coveo.backend.challenge.util.CityInfoBuilder;
-import coveo.backend.challenge.util.CoveoExceptionHelper;
+import coveo.backend.challenge.exception.CoveoExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

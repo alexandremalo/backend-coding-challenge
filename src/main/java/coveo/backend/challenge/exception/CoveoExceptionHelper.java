@@ -1,6 +1,4 @@
-package coveo.backend.challenge.util;
-
-import coveo.backend.challenge.model.CoveoException;
+package coveo.backend.challenge.exception;
 
 public class CoveoExceptionHelper {
     public static void throwSemaphoreAcquireErrorUpdate(Exception ex) throws CoveoException{

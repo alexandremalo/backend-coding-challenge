@@ -1,4 +1,4 @@
-package coveo.backend.challenge.model;
+package coveo.backend.challenge.exception;
 
 public class CoveoException extends RuntimeException {
     private int errorCode;
