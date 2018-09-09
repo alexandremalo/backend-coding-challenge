@@ -33,7 +33,7 @@ public class SuggestionREST {
 
     //Clearing cache every 24 hours
     @Scheduled(fixedDelayString = "${cities.refresh.rate}")
-    @RequestMapping(value = CLEAR_CACHE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = CLEAR_CACHE_URL, method = RequestMethod.POST)
     public ResponseEntity clearCache() {
         mediator.clearCache();
         return ResponseEntity.noContent().build();
