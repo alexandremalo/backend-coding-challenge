@@ -27,7 +27,6 @@ public class AdminCodeMapping {
         provinceMap.put("03", "MB");
         provinceMap.put("04", "NB");
         provinceMap.put("05", "NL");
-        //Skip 06 ??
         provinceMap.put("07", "NS");
         provinceMap.put("08", "ON");
         provinceMap.put("09", "PE");

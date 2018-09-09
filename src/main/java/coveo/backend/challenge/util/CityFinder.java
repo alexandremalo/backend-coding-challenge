@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CityFinder {
-    public List<CityInfo> getRelevantCity(String query, Map<Long, CityInfo> allCitiesMap) {
+    public static List<CityInfo> getRelevantCity(String query, Map<Long, CityInfo> allCitiesMap) {
         List<CityInfo> relevantCities = new ArrayList<CityInfo>();
         //Return empty list if query is null or too short (must be >= 3)
         if (!StringUtils.isEmpty(query) && query.length() >= 3){

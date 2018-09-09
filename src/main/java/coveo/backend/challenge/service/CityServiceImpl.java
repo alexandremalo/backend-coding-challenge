@@ -2,11 +2,10 @@ package coveo.backend.challenge.service;
 
 import coveo.backend.challenge.config.CitiesDataSource;
 import coveo.backend.challenge.model.CityInfo;
-import coveo.backend.challenge.model.CoveoRESTException;
+import coveo.backend.challenge.model.CoveoException;
 import coveo.backend.challenge.util.CityInfoBuilder;
+import coveo.backend.challenge.util.CoveoExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -14,11 +13,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 @Component
 public class CityServiceImpl implements CityService {
 
     private CitiesDataSource citiesDataSource;
+
+    private Map<Long, CityInfo> allCitiesMap;
 
     private final int ID_COLUMN = 0;
     private final int NAME_COLUMN = 1;
@@ -32,41 +34,21 @@ public class CityServiceImpl implements CityService {
     private final String TAB_SPLITTER = "\t";
 
     @Autowired
-    public CityServiceImpl(CitiesDataSource citiesDataSource){
+    public CityServiceImpl(CitiesDataSource citiesDataSource) {
         this.citiesDataSource = citiesDataSource;
     }
 
     @Override
-    @Cacheable(value="allCitiesCache")
     public Map<Long, CityInfo> getAllCities() {
-        Map<Long, CityInfo> allCitiesMap = new HashMap<Long, CityInfo>();
-        URL citiesDataURL;
-        try {
-            String url = citiesDataSource.getCitiesFile();
-            citiesDataURL = new URL(url);
-            BufferedReader citiesBR = new BufferedReader(new InputStreamReader(citiesDataURL.openStream()));
-            String line;
-            citiesBR.readLine();
-            line = citiesBR.readLine();
-            while (line != null) {
-                CityInfo cityInfo = cityInfoFromFileLine(line);
-                if(cityInfo != null)
-                    allCitiesMap.put(cityInfo.getId(), cityInfo);
-                line = citiesBR.readLine();
-            }
-            citiesBR.close();
-
-        } catch (CoveoRESTException e) {
-            throw e;
-        } catch (Exception e){
-            throw new CoveoRESTException(500, "Unable to fetch data from URL", "Unable to load remote TSV file", e.getMessage());
+        if (allCitiesMap == null) {
+            fetchAllCities(null);
         }
         return allCitiesMap;
     }
 
-    private CityInfo cityInfoFromFileLine(String line){
+    private CityInfo cityInfoFromFileLine(String line) {
         CityInfo cityInfo = null;
-        try{
+        try {
             String[] splittedCityLine = line.split(TAB_SPLITTER);
             CityInfoBuilder cityInfoBuilder = new CityInfoBuilder();
             cityInfo = cityInfoBuilder
@@ -79,15 +61,60 @@ public class CityServiceImpl implements CityService {
                     .latitude(Double.valueOf(splittedCityLine[LATITUDE_COLUMN]))
                     .population(Integer.valueOf(splittedCityLine[POPULATION_COLUMN]))
                     .createCityInfo();
-        } catch (Exception e){
-            throw new CoveoRESTException(500, "Was not able to parse TSV line", "Bad data in TSV", e.getMessage());
+        } catch (Exception ex) {
+            CoveoExceptionHelper.throwCityDataParseError(ex);
         }
         return cityInfo;
     }
 
     @Override
-    @CacheEvict(value = "allCitiesCache", allEntries=true)
-    public void clearCache(){
+    public void clearCache(Semaphore allCitiesSemaphore) {
+        fetchAllCities(allCitiesSemaphore);
+    }
+
+    private void fetchAllCities(Semaphore allCitiesSemaphore) {
+        Map<Long, CityInfo> fetchedCitiesMap = new HashMap<Long, CityInfo>();
+        URL citiesDataURL;
+        try {
+            String url = citiesDataSource.getCitiesFile();
+            citiesDataURL = new URL(url);
+            BufferedReader citiesBR = new BufferedReader(new InputStreamReader(citiesDataURL.openStream()));
+            String line;
+            citiesBR.readLine();
+            line = citiesBR.readLine();
+            while (line != null) {
+                CityInfo cityInfo = cityInfoFromFileLine(line);
+                if (cityInfo != null)
+                    fetchedCitiesMap.put(cityInfo.getId(), cityInfo);
+                line = citiesBR.readLine();
+            }
+            citiesBR.close();
+
+        } catch (CoveoException e) {
+            throw e;
+        } catch (Exception ex) {
+            CoveoExceptionHelper.throwCannotFetchCityData(ex);
+        }
+        affectNewCityMap(fetchedCitiesMap, allCitiesSemaphore);
+    }
+
+    private void affectNewCityMap(Map<Long, CityInfo> newAllCitiesMap, Semaphore allCitiesSemaphore) {
+        //Ensure no other thread is currently using AllCitiesMap object while updating it
+        if(allCitiesSemaphore != null){
+            try{
+                allCitiesSemaphore.acquire();
+            } catch (InterruptedException ex){
+                CoveoExceptionHelper.throwSemaphoreAcquireErrorUpdate(ex);
+            }
+        }
+        if (allCitiesMap != null) {
+            allCitiesMap.clear();
+        } else {
+            allCitiesMap = new HashMap<>();
+        }
+        allCitiesMap.putAll(newAllCitiesMap);
+        if(allCitiesSemaphore != null)
+            allCitiesSemaphore.release();
     }
 
 }

@@ -3,13 +3,27 @@ package coveo.backend.challenge.util;
 import coveo.backend.challenge.config.AdminCodeMapping;
 import coveo.backend.challenge.model.CityInfo;
 import coveo.backend.challenge.model.Suggestion;
+import coveo.backend.challenge.model.SuggestionResponse;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SuggestionMapper {
 
-    public static Suggestion fromCityInfo(CityInfo cityInfo) {
+    public static SuggestionResponse suggestionResponseFromCityInfoList(List<CityInfo> cityInfoList){
+        SuggestionResponse suggestionResponse = new SuggestionResponse();
+        suggestionResponse.setSuggestions(new ArrayList<>());
+        if(cityInfoList != null){
+            for (CityInfo cityInfo : cityInfoList) {
+                suggestionResponse.addSuggestionsItem(SuggestionMapper.fromCityInfo(cityInfo));
+            }
+        }
+        return suggestionResponse;
+    }
+
+    private static Suggestion fromCityInfo(CityInfo cityInfo) {
         Suggestion suggestion = new Suggestion();
         String fullCityName = new StringBuilder()
                 .append(cityInfo.getName())

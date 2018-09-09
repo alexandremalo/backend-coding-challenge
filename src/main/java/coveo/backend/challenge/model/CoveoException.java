@@ -1,6 +1,6 @@
 package coveo.backend.challenge.model;
 
-public class CoveoRESTException extends RuntimeException {
+public class CoveoException extends RuntimeException {
     private int errorCode;
     private String customMessage;
     private String errorName;
@@ -38,7 +38,7 @@ public class CoveoRESTException extends RuntimeException {
         this.devMessage = devMessage;
     }
 
-    public CoveoRESTException(int errorCode, String customMessage, String errorName, String devMessage){
+    public CoveoException(int errorCode, String customMessage, String errorName, String devMessage){
         this.errorCode = errorCode;
         this.customMessage = customMessage;
         this.errorName = errorName;

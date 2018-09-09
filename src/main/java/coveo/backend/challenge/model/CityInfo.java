@@ -1,7 +1,5 @@
 package coveo.backend.challenge.model;
 
-import java.math.BigDecimal;
-
 public class CityInfo {
     private long id;
     private String name;

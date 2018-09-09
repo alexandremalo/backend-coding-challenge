@@ -1,8 +1,6 @@
 package coveo.backend.challenge.rest;
 
 import coveo.backend.challenge.mediator.Mediator;
-import coveo.backend.challenge.model.Suggestion;
-import coveo.backend.challenge.model.SuggestionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigDecimal;
 
 @RestController
 @Component
@@ -36,10 +32,12 @@ public class SuggestionREST {
     }
 
     //Clearing cache every 24 hours
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(fixedDelayString = "${cities.refresh.rate}")
     @RequestMapping(value = CLEAR_CACHE_URL, method = RequestMethod.GET)
     public ResponseEntity clearCache() {
+        System.out.println("Refreshing object");
         mediator.clearCache();
+        System.out.println("Refresh done");
         return ResponseEntity.noContent().build();
     }
 

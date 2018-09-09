@@ -32,8 +32,7 @@ public class CityScoreServiceImpl implements CityScoreService {
                 applyFinalScore(cityInfo, nameScore, populationScore, distanceScore);
             }
         }
-        Collections.sort(cityInfoList,
-                (o1, o2) -> o1.compareTo(o2));
+        Collections.sort(cityInfoList, (o1, o2) -> o1.compareTo(o2));
     }
 
     @Override
@@ -46,8 +45,7 @@ public class CityScoreServiceImpl implements CityScoreService {
                 applyFinalScore(cityInfo, nameScore, populationScore);
             }
         }
-        Collections.sort(cityInfoList,
-                (o1, o2) -> o1.compareTo(o2));
+        Collections.sort(cityInfoList, (o1, o2) -> o1.compareTo(o2));
     }
 
     private ScoreMetadata feedMinMax(List<CityInfo> cityInfoList, double longitude, double latitude, boolean calculateDistance) {
