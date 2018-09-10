@@ -24,11 +24,11 @@ public class CityScoreServiceImpl implements CityScoreService {
     @Override
     public void scoreAndSortCities(List<CityInfo> cityInfoList, String query, double longitude, double latitude) {
         if (!cityInfoList.isEmpty()) {
-            ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, longitude, latitude, true);
+            ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, query, longitude, latitude, true);
             for (CityInfo cityInfo : cityInfoList) {
                 double distanceScore = 1 - getMetricScore(getDistance(cityInfo, longitude, latitude), scoreMetadata.getMinDistance(), scoreMetadata.getMaxDistance());
                 double populationScore = getMetricScore(cityInfo.getPopulation(), scoreMetadata.getMinPopulation(), scoreMetadata.getMaxPopulation());
-                double nameScore = getNameScore(cityInfo, query);
+                double nameScore = getMetricScore(getNameScore(cityInfo, query), scoreMetadata.getMinName(), scoreMetadata.getMaxName());
                 applyFinalScore(cityInfo, nameScore, populationScore, distanceScore);
             }
         }
@@ -38,25 +38,35 @@ public class CityScoreServiceImpl implements CityScoreService {
     @Override
     public void scoreAndSortCities(List<CityInfo> cityInfoList, String query) {
         if (!cityInfoList.isEmpty()) {
-            ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, 0, 0, false);
+            ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, query, 0, 0, false);
             for (CityInfo cityInfo : cityInfoList) {
                 double populationScore = getMetricScore(cityInfo.getPopulation(), scoreMetadata.getMinPopulation(), scoreMetadata.getMaxPopulation());
-                double nameScore = getNameScore(cityInfo, query);
+                double nameScore = getMetricScore(getNameScore(cityInfo, query), scoreMetadata.getMinName(), scoreMetadata.getMaxName());
                 applyFinalScore(cityInfo, nameScore, populationScore);
             }
         }
         Collections.sort(cityInfoList, (o1, o2) -> o1.compareTo(o2));
     }
 
-    private ScoreMetadata feedMinMax(List<CityInfo> cityInfoList, double longitude, double latitude, boolean calculateDistance) {
+    private ScoreMetadata feedMinMax(List<CityInfo> cityInfoList, String query, double longitude, double latitude, boolean calculateDistance) {
         CityInfo initCity = cityInfoList.get(0);
         double minDistance = CoordinatesDistanceUtil.getDistanceBetweenTwoCoordinates(longitude, latitude, initCity.getLongitude(), initCity.getLatitude());
-        ScoreMetadata scoreMetadata = new ScoreMetadata(cityInfoList.get(0).getPopulation(), 0, minDistance, 0);
+        ScoreMetadata scoreMetadata = new ScoreMetadata(cityInfoList.get(0).getPopulation(), 0, minDistance, 0, getNameScore(cityInfoList.get(0), query), 0);
         for (CityInfo cityInfo : cityInfoList) {
+            //Set Min Max for Name Score
+            double tempNameScore = getNameScore(cityInfo, query);
+            if (tempNameScore > scoreMetadata.getMaxName())
+                scoreMetadata.setMaxName(tempNameScore);
+            else if (tempNameScore < scoreMetadata.getMinName())
+                scoreMetadata.setMinName(tempNameScore);
+
+            //Set Min Max for population
             if (cityInfo.getPopulation() > scoreMetadata.getMaxPopulation())
                 scoreMetadata.setMaxPopulation(cityInfo.getPopulation());
             else if (cityInfo.getPopulation() < scoreMetadata.getMinPopulation())
                 scoreMetadata.setMinPopulation(cityInfo.getPopulation());
+
+            //Set Min Max for Distance (if long/lat was provided)
             if(calculateDistance){
                 int tempDistance = (int) Math.round(CoordinatesDistanceUtil.getDistanceBetweenTwoCoordinates(longitude, latitude, cityInfo.getLongitude(), cityInfo.getLatitude()));
                 if (tempDistance > scoreMetadata.getMaxDistance())
@@ -69,13 +79,14 @@ public class CityScoreServiceImpl implements CityScoreService {
     }
 
     private int getDistance(CityInfo cityInfo, double longitude, double latitude) {
-        return (int) Math.round(Math.round(CoordinatesDistanceUtil.getDistanceBetweenTwoCoordinates(longitude, latitude, cityInfo.getLongitude(), cityInfo.getLatitude())));
+        return Math.round(Math.round(CoordinatesDistanceUtil.getDistanceBetweenTwoCoordinates(longitude, latitude, cityInfo.getLongitude(), cityInfo.getLatitude())));
     }
 
     //Min-Max feature scaling
     //https://en.wikipedia.org/wiki/Feature_scaling
     private double getMetricScore(double value, double min, double max) {
-        return ((value - min) / (max - min));
+        //Want to receive 1 if min and max are equals
+        return (value == max) ? 1 : ((value - min) / (max - min));
     }
 
     private double getNameScore(CityInfo cityInfo, String query) {
@@ -83,7 +94,7 @@ public class CityScoreServiceImpl implements CityScoreService {
         if (cityInfo.getName().toLowerCase().equals(query.toLowerCase())){
             nameScore = 1d;
         } else if (cityInfo.getName().toLowerCase().startsWith(query.toLowerCase())) {
-            nameScore = 0.7d;
+            nameScore = 0.5d;
         } else if (!StringUtils.isEmpty(cityInfo.getAltName())) {
             String[] altNames = cityInfo.getAltName().split(",");
             for (String name : altNames) {
@@ -92,7 +103,7 @@ public class CityScoreServiceImpl implements CityScoreService {
                     break;
                 }
                 if (name.toLowerCase().startsWith(query.toLowerCase())) {
-                    nameScore = 0.6d;
+                    nameScore = 0.4d;
                     break;
                 }
             }

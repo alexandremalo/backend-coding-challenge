@@ -5,12 +5,16 @@ public class ScoreMetadata {
     private int maxPopulation;
     private double minDistance;
     private double maxDistance;
+    private double maxName;
+    private double minName;
 
-    public ScoreMetadata(int minPopulation, int maxPopulation, double minDistance, double maxDistance) {
+    public ScoreMetadata(int minPopulation, int maxPopulation, double minDistance, double maxDistance, double minName, double maxName) {
         this.minPopulation = minPopulation;
         this.maxPopulation = maxPopulation;
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
+        this.minName = minName;
+        this.maxName = maxName;
     }
 
     public int getMinPopulation() {
@@ -43,5 +47,21 @@ public class ScoreMetadata {
 
     public void setMaxDistance(double maxDistance) {
         this.maxDistance = maxDistance;
+    }
+
+    public double getMaxName() {
+        return maxName;
+    }
+
+    public void setMaxName(double maxName) {
+        this.maxName = maxName;
+    }
+
+    public double getMinName() {
+        return minName;
+    }
+
+    public void setMinName(double minName) {
+        this.minName = minName;
     }
 }
