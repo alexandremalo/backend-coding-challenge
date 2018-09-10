@@ -1,5 +1,8 @@
-# Coveo Backend Coding Challenge
-(inspired by https://github.com/busbud/coding-challenge-backend-c)
+# North-America cities auto-complete service
+
+## Swagger-UI
+
+https://north-america-large-cities.herokuapp.com/swagger-ui.html#/suggestion-rest/getSuggestionsUsingGET
 
 ## Requirements
 
