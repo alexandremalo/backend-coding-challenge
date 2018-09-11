@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Component
 @Api(value = "SuggestionController", description = "Expose Auto-complete API of North America large cities")
-public class SuggestionREST {
+public class SuggestionController {
 
     private final String SUGGESTION_URL = "/suggestions";
     private final String CLEAR_CACHE_URL = "/_clear-cache";
@@ -26,7 +26,7 @@ public class SuggestionREST {
     private Mediator mediator;
 
     @Autowired
-    public SuggestionREST(Mediator mediator){
+    public SuggestionController(Mediator mediator){
         this.mediator = mediator;
     }
 

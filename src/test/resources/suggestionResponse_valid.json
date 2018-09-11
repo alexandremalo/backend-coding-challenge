@@ -1,0 +1,40 @@
+{
+  "suggestions": [
+    {
+      "name": "Montréal, QC, Canada",
+      "latitude": "45.50884",
+      "longitude": "-73.58781",
+      "score": 1
+    },
+    {
+      "name": "Montréal-Ouest, QC, Canada",
+      "latitude": "45.45286",
+      "longitude": "-73.64918",
+      "score": 0.83266
+    },
+    {
+      "name": "Montrose-Ghent, OH, USA",
+      "latitude": "41.1538",
+      "longitude": "-81.64378",
+      "score": 0.76502
+    },
+    {
+      "name": "Montrose, VA, USA",
+      "latitude": "37.5207",
+      "longitude": "-77.37831",
+      "score": 0.75422
+    },
+    {
+      "name": "Montrose, CO, USA",
+      "latitude": "38.47832",
+      "longitude": "-107.87617",
+      "score": 0.58821
+    },
+    {
+      "name": "La Crescenta-Montrose, CA, USA",
+      "latitude": "34.23216",
+      "longitude": "-118.23529",
+      "score": 0.00074
+    }
+  ]
+}
