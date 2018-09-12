@@ -1,11 +1,10 @@
 package coveo.backend.challenge.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import coveo.backend.challenge.config.CitiesDataSource;
-import coveo.backend.challenge.model.CityInfo;
 import coveo.backend.challenge.exception.CoveoException;
-import coveo.backend.challenge.util.CityInfoBuilder;
 import coveo.backend.challenge.exception.CoveoExceptionHelper;
+import coveo.backend.challenge.model.CityInfo;
+import coveo.backend.challenge.util.CityInfoBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -82,12 +81,6 @@ public class CityServiceImpl implements CityService {
             throw e;
         } catch (Exception ex) {
             CoveoExceptionHelper.throwCannotFetchCityData(ex);
-        }
-        String testJson;
-        try{
-            testJson = new ObjectMapper().writeValueAsString(fetchedCitiesMap);
-        } catch (Exception e){
-
         }
         affectNewCityMap(fetchedCitiesMap, allCitiesSemaphore);
     }

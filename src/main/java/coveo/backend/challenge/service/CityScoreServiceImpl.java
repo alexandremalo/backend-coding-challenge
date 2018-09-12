@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CityScoreServiceImpl implements CityScoreService {
     }
 
     @Override
-    public void scoreAndSortCities(List<CityInfo> cityInfoList, String query, double longitude, double latitude) {
+    public List<CityInfo> scoreAndSortCities(List<CityInfo> cityInfoList, String query, double longitude, double latitude) {
         if (!cityInfoList.isEmpty()) {
             ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, query, longitude, latitude, true);
             for (CityInfo cityInfo : cityInfoList) {
@@ -32,11 +33,11 @@ public class CityScoreServiceImpl implements CityScoreService {
                 applyFinalScore(cityInfo, nameScore, populationScore, distanceScore);
             }
         }
-        Collections.sort(cityInfoList, (o1, o2) -> o1.compareTo(o2));
+        return returnSortedList(cityInfoList);
     }
 
     @Override
-    public void scoreAndSortCities(List<CityInfo> cityInfoList, String query) {
+    public List<CityInfo> scoreAndSortCities(List<CityInfo> cityInfoList, String query) {
         if (!cityInfoList.isEmpty()) {
             ScoreMetadata scoreMetadata = feedMinMax(cityInfoList, query, 0, 0, false);
             for (CityInfo cityInfo : cityInfoList) {
@@ -45,7 +46,14 @@ public class CityScoreServiceImpl implements CityScoreService {
                 applyFinalScore(cityInfo, nameScore, populationScore);
             }
         }
+        return returnSortedList(cityInfoList);
+    }
+
+    private List<CityInfo> returnSortedList(List<CityInfo> cityInfoList){
         Collections.sort(cityInfoList, (o1, o2) -> o1.compareTo(o2));
+        List<CityInfo> sortedCityInfoList = new ArrayList<>();
+        sortedCityInfoList.addAll(cityInfoList);
+        return sortedCityInfoList;
     }
 
     private ScoreMetadata feedMinMax(List<CityInfo> cityInfoList, String query, double longitude, double latitude, boolean calculateDistance) {

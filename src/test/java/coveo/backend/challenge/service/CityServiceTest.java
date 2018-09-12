@@ -3,23 +3,16 @@ package coveo.backend.challenge.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import coveo.backend.challenge.config.CitiesDataSource;
-import coveo.backend.challenge.mediator.Mediator;
 import coveo.backend.challenge.model.CityInfo;
-import coveo.backend.challenge.model.SuggestionResponse;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class CityServiceTest {
 

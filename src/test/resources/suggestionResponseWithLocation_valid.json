@@ -4,25 +4,25 @@
       "name": "Montreal, BC, Canada",
       "latitude": "49.05798",
       "longitude": "-122.25257",
-      "score": 1.0
+      "score": 0.66667
     },
     {
       "name": "test, AB, Canada",
       "latitude": "51.30011",
       "longitude": "-114.03528",
-      "score": 0.63333
+      "score": 0.47791
     },
     {
       "name": "Ajax, ON, Canada",
       "latitude": "43.85012",
       "longitude": "-79.03288",
-      "score": 0.14506
+      "score": 0.38056
     },
     {
       "name": "Amont-rose Vale, QC, Canada",
       "latitude": "45.65007",
       "longitude": "-72.56582",
-      "score": 0.0
+      "score": 0.33333
     }
   ]
 }
