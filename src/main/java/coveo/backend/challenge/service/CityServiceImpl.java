@@ -1,5 +1,6 @@
 package coveo.backend.challenge.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import coveo.backend.challenge.config.CitiesDataSource;
 import coveo.backend.challenge.model.CityInfo;
 import coveo.backend.challenge.exception.CoveoException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
@@ -57,8 +59,15 @@ public class CityServiceImpl implements CityService {
         URL citiesDataURL;
         try {
             String url = citiesDataSource.getCitiesFile();
-            citiesDataURL = new URL(url);
-            BufferedReader citiesBR = new BufferedReader(new InputStreamReader(citiesDataURL.openStream()));
+            BufferedReader citiesBR;
+            //Check if it is a remote or local file
+            if(url.startsWith("http")){
+                citiesDataURL = new URL(url);
+                citiesBR = new BufferedReader(new InputStreamReader(citiesDataURL.openStream()));
+            } else {
+                FileReader fileReader = new FileReader(url);
+                citiesBR = new BufferedReader(fileReader);
+            }
             Map<String, Integer> columnNumberMap = getColumnNumbersFromHeaderLine(citiesBR.readLine());
             String line = citiesBR.readLine();
             while (line != null) {
@@ -73,6 +82,12 @@ public class CityServiceImpl implements CityService {
             throw e;
         } catch (Exception ex) {
             CoveoExceptionHelper.throwCannotFetchCityData(ex);
+        }
+        String testJson;
+        try{
+            testJson = new ObjectMapper().writeValueAsString(fetchedCitiesMap);
+        } catch (Exception e){
+
         }
         affectNewCityMap(fetchedCitiesMap, allCitiesSemaphore);
     }

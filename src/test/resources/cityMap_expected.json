@@ -1,0 +1,46 @@
+{
+  "5882873": {
+    "id": 5882873,
+    "name": "Ajax",
+    "altName": "Adzhaks,Ehjdzhaks,Ejdzaks,ajaks, awntaryw,eijegseu,Аджакс,Ејџакс,Эйджакс,أجاكس، أونتاريو,에이젝스",
+    "country": "CA",
+    "stateOrProvince": "08",
+    "longitude": -79.03288,
+    "latitude": 43.85012,
+    "population": 90167,
+    "score": 0.0
+  },
+  "5881791": {
+    "id": 5881791,
+    "name": "Abbotsford",
+    "altName": "Abbotsford,YXX,Абботсфорд",
+    "country": "CA",
+    "stateOrProvince": "02",
+    "longitude": -122.25257,
+    "latitude": 49.05798,
+    "population": 151683,
+    "score": 0.0
+  },
+  "5882799": {
+    "id": 5882799,
+    "name": "Airdrie",
+    "altName": "Erdri,ai er de li,ayrdray,ayrdry,eeodeuli,Ердри,إيردراي,ائرڈرائ,ایردری,艾尔德里,에어드리",
+    "country": "CA",
+    "stateOrProvince": "01",
+    "longitude": -114.03528,
+    "latitude": 51.30011,
+    "population": 24673,
+    "score": 0.0
+  },
+  "5882142": {
+    "id": 5882142,
+    "name": "Acton Vale",
+    "altName": "",
+    "country": "CA",
+    "stateOrProvince": "10",
+    "longitude": -72.56582,
+    "latitude": 45.65007,
+    "population": 5135,
+    "score": 0.0
+  }
+}

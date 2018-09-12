@@ -22,6 +22,9 @@ public class CityInfo {
         this.population = population;
     }
 
+    public CityInfo(){
+    }
+
 
     public long getId() {
         return id;
