@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class WeightingConfig {
-    @Value("${weight.percentage.name:1}")
+    @Value("${weight.name:1}")
     private int name;
-    @Value("${weight.percentage.population:1}")
+    @Value("${weight.population:1}")
     private int population;
-    @Value("${weight.percentage.distance:1}")
+    @Value("${weight.distance:1}")
     private int distance;
 
     public int getName() {
