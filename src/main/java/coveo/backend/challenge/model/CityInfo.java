@@ -24,8 +24,7 @@ public class CityInfo {
 
     public CityInfo(){
     }
-
-
+    
     public long getId() {
         return id;
     }
@@ -98,7 +97,7 @@ public class CityInfo {
         this.score = score;
     }
 
-    //Descendant order
+    //Descending order
     public int compareTo(CityInfo cityInfo) {
         return (this.getScore() - cityInfo.getScore() > 0) ? -1 : 1;
     }
