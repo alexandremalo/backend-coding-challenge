@@ -36,13 +36,12 @@ public class MediatorImpl implements Mediator {
         } catch (InterruptedException ex){
             CoveoExceptionHelper.throwSemaphoreAcquireErrorGet(ex);
         }
-
         //Getting list of cities to score
         List<CityInfo> relevantCities = CityFinder.getRelevantCity(query, cityService.getAllCities());
 
         allCitiesSemaphore.release();
         List<CityInfo> scoredAndSortedCities;
-        //Evaluating if which scoring method to call (with or without distance score)
+        //Evaluating which scoring method to call (with or without distance score)
         if (!StringUtils.isEmpty(longitude) && !StringUtils.isEmpty(latitude)) {
             Double longitudeDouble = 0d;
             Double latitudeDouble = 0d;
@@ -57,7 +56,6 @@ public class MediatorImpl implements Mediator {
         } else {
             scoredAndSortedCities = cityScoreService.scoreAndSortCities(relevantCities, query);
         }
-
         //Converting Back-end Model to Response Model
         return SuggestionMapper.suggestionResponseFromCityInfoList(scoredAndSortedCities);
     }
